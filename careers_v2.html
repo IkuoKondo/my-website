@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>採用情報 - Payment-Technology</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DESIGN TOKENS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+:root {
+  --navy:    #1a2a4a;
+  --navy2:   #12213a;
+  --blue:    #2563a8;
+  --blue-lt: #3b82c4;
+  --blue-pale: #e8f0fb;
+  --gray-dk: #333344;
+  --gray:    #555566;
+  --gray-lt: #999aaa;
+  --border:  #e4e6ee;
+  --bg:      #f6f7fb;
+  --white:   #ffffff;
+  --font: 'Noto Sans JP', sans-serif;
+  --serif: 'Noto Serif JP', serif;
+  --max: 1100px;
+  --side: clamp(1.5rem,5vw,4rem);
+  --ease: cubic-bezier(.25,.8,.25,1);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--gray-dk);background:var(--white);line-height:1.8;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+ul,ol{list-style:none}
+
+/* ━━━━━━━━━━━━━━━━━━ HEADER */
+.site-header{
+  position:sticky;top:0;z-index:300;
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  transition:box-shadow .3s;
+}
+.site-header.scrolled{box-shadow:0 2px 20px rgba(26,42,74,.08)}
+.header-inner{
+  max-width:var(--max);margin:0 auto;padding:0 var(--side);
+  display:flex;align-items:center;justify-content:space-between;height:68px;
+}
+.logo-wrap{display:flex;align-items:center;gap:.6rem;font-weight:700;font-size:1rem;color:var(--navy);letter-spacing:.04em}
+.logo-mark{
+  width:34px;height:34px;background:var(--navy);border-radius:5px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.logo-mark svg{width:20px;height:20px;fill:#fff}
+.global-nav{display:flex;align-items:center;gap:0}
+.global-nav a{
+  display:block;padding:0 1rem;font-size:.8rem;font-weight:400;letter-spacing:.04em;
+  color:var(--gray-dk);height:68px;line-height:68px;
+  border-bottom:2px solid transparent;transition:color .2s,border-color .2s;
+}
+.global-nav a:hover{color:var(--blue)}
+.global-nav a.active{color:var(--blue);border-bottom-color:var(--blue);font-weight:500}
+.nav-cta{
+  margin-left:.8rem;background:var(--blue);color:#fff!important;
+  border-radius:5px;padding:0 1.3rem!important;height:36px!important;
+  line-height:36px!important;font-size:.78rem!important;letter-spacing:.06em!important;
+  border-bottom:none!important;transition:background .2s!important;
+}
+.nav-cta:hover{background:var(--blue-lt)!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px;transition:.3s}
+.mobile-nav{display:none;flex-direction:column;border-top:1px solid var(--border)}
+.mobile-nav.open{display:flex}
+.mobile-nav a{padding:.8rem var(--side);font-size:.88rem;border-bottom:1px solid var(--border);color:var(--gray-dk)}
+.mobile-nav a:hover{color:var(--blue);background:var(--bg)}
+
+/* ━━━━━━━━━━━━━━━━━━ HERO — FULL VISUAL */
+.hero{
+  position:relative;overflow:hidden;
+  min-height:92vh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  background:var(--navy2);
+}
+
+/* animated grid bg */
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:64px 64px;
+}
+/* glow */
+.hero-glow{
+  position:absolute;top:-20%;left:55%;
+  width:70vw;height:70vw;
+  background:radial-gradient(ellipse, rgba(37,99,168,.35) 0%, transparent 65%);
+  pointer-events:none;
+}
+.hero-glow2{
+  position:absolute;bottom:-10%;left:-10%;
+  width:40vw;height:40vw;
+  background:radial-gradient(ellipse, rgba(37,99,168,.15) 0%, transparent 65%);
+  pointer-events:none;
+}
+
+/* floating UI cards */
+.hero-cards{
+  position:absolute;right:4%;top:50%;transform:translateY(-48%);
+  width:clamp(280px,36vw,460px);
+  display:flex;flex-direction:column;gap:1.2rem;
+}
+.hcard{
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:12px;padding:1.4rem 1.6rem;
+  backdrop-filter:blur(10px);
+  animation:floatCard 6s ease-in-out infinite;
+}
+.hcard:nth-child(2){animation-delay:-2s;animation-duration:7s}
+.hcard:nth-child(3){animation-delay:-4s;animation-duration:5s}
+.hcard-label{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:.5rem}
+.hcard-content{display:flex;align-items:center;gap:1rem}
+.hcard-icon{
+  width:40px;height:40px;border-radius:8px;
+  background:rgba(37,99,168,.4);border:1px solid rgba(37,99,168,.5);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.hcard-icon svg{width:20px;height:20px;stroke:#7eb8f0;fill:none;stroke-width:2}
+.hcard-val{font-size:1.5rem;font-weight:700;color:#fff;line-height:1}
+.hcard-sub{font-size:.72rem;color:rgba(255,255,255,.5);margin-top:.15rem}
+/* progress bar */
+.hcard-bar{margin-top:.8rem;background:rgba(255,255,255,.1);border-radius:100px;height:5px;overflow:hidden}
+.hcard-bar-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,#2563a8,#60a5fa);animation:barFill 2.5s ease forwards}
+/* tag row */
+.hcard-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.3rem}
+.hcard-tag{
+  font-size:.65rem;padding:.2rem .6rem;border-radius:3px;
+  background:rgba(37,99,168,.3);color:#7eb8f0;border:1px solid rgba(37,99,168,.4);
+}
+/* avatar row */
+.avatar-row{display:flex;gap:-.4rem;margin-top:.4rem}
+.avatar{
+  width:30px;height:30px;border-radius:50%;
+  border:2px solid rgba(255,255,255,.2);
+  background:var(--blue);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;color:#fff;font-weight:700;
+  margin-right:-8px;
+}
+
+/* hero text */
+.hero-content{
+  position:relative;z-index:2;
+  padding:0 var(--side) 6rem;
+  max-width:var(--max);margin:0 auto;width:100%;
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);margin-bottom:1.6rem;
+  opacity:0;animation:fadeUp .8s .2s var(--ease) forwards;
+}
+.hero-tag::before{content:'';width:20px;height:1px;background:rgba(255,255,255,.3)}
+
+.hero-h1{
+  font-size:clamp(2.8rem,6vw,5.5rem);
+  font-weight:900;line-height:1.12;
+  letter-spacing:-.02em;
+  color:#fff;
+  margin-bottom:1.5rem;
+  opacity:0;animation:fadeUp .9s .35s var(--ease) forwards;
+}
+.hero-h1 em{
+  font-style:normal;
+  background:linear-gradient(135deg,#60a5fa,#2563a8);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+
+.hero-sub{
+  font-size:clamp(.9rem,1.4vw,1.05rem);line-height:2;
+  color:rgba(255,255,255,.55);max-width:520px;margin-bottom:2.5rem;
+  opacity:0;animation:fadeUp .9s .5s var(--ease) forwards;
+}
+
+.hero-actions{
+  display:flex;gap:1rem;flex-wrap:wrap;
+  opacity:0;animation:fadeUp .9s .65s var(--ease) forwards;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-family:var(--font);font-size:.88rem;font-weight:700;
+  letter-spacing:.06em;padding:.9rem 2rem;border-radius:5px;
+  transition:background .2s,color .2s,transform .15s,border-color .2s;
+  cursor:pointer;border:1px solid transparent;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn-primary:hover{background:var(--blue-lt);border-color:var(--blue-lt)}
+.btn-outline-white{background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
+.btn-outline-white:hover{background:rgba(255,255,255,.08);border-color:#fff}
+.btn-outline{background:transparent;color:var(--blue);border-color:var(--blue)}
+.btn-outline:hover{background:var(--blue-pale)}
+
+/* scroll indicator */
+.hero-scroll{
+  position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  opacity:0;animation:fadeIn 1s 1.5s ease forwards;
+}
+.hero-scroll span{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,rgba(255,255,255,.2),transparent);animation:scrollPulse 2s ease infinite}
+
+/* ━━━━━━━━━━━━━━━━━━ MISSION BAND */
+.mission-band{
+  background:var(--navy);
+  padding:2rem var(--side);
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.mission-band::before{
+  content:'INNOVATION';
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-size:clamp(3rem,8vw,8rem);font-weight:900;letter-spacing:.2em;
+  color:rgba(255,255,255,.025);white-space:nowrap;pointer-events:none;
+}
+.mission-band p{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:.3rem}
+.mission-band h2{font-size:clamp(1rem,2.5vw,1.4rem);font-weight:700;color:#fff;letter-spacing:.06em}
+
+/* subnav */
+.page-subnav{background:var(--white);border-bottom:1px solid var(--border);overflow-x:auto}
+.subnav-inner{max-width:var(--max);margin:0 auto;padding:0 var(--side);display:flex;gap:0}
+.page-subnav a{
+  display:block;padding:.85rem 1.2rem;font-size:.8rem;color:var(--gray);
+  border-bottom:2px solid transparent;transition:color .2s,border-color .2s;white-space:nowrap;
+}
+.page-subnav a:hover{color:var(--blue)}
+.page-subnav a.active{color:var(--blue);border-bottom-color:var(--blue);font-weight:500}
+
+/* ━━━━━━━━━━━━━━━━━━ SECTION SHARED */
+.section{padding:clamp(5rem,9vw,8rem) var(--side)}
+.s-inner{max-width:var(--max);margin:0 auto}
+.s-label{
+  font-size:.68rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:.5rem;
+  display:flex;align-items:center;gap:.7rem;
+}
+.s-label::before{content:'';width:16px;height:2px;background:var(--blue)}
+.s-title{
+  font-size:clamp(1.8rem,4vw,3rem);font-weight:900;
+  color:var(--navy);letter-spacing:-.02em;line-height:1.2;margin-bottom:.5rem;
+}
+.s-title-en{font-size:.75rem;color:var(--gray-lt);letter-spacing:.14em;margin-bottom:2.5rem}
+.s-lead{font-size:.95rem;color:var(--gray);line-height:2;max-width:680px}
+
+/* ━━━━━━━━━━━━━━━━━━ MESSAGE */
+.message-section{background:var(--white)}
+.message-layout{
+  display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;margin-top:3.5rem;
+}
+.message-body{font-size:.93rem;line-height:2.1;color:var(--gray-dk)}
+.message-body p+p{margin-top:1.3rem}
+.message-body strong{color:var(--navy)}
+.message-body .cta-link{
+  display:inline-flex;align-items:center;gap:.4rem;
+  margin-top:2rem;font-size:.88rem;font-weight:700;color:var(--blue);
+  border-bottom:1px solid var(--blue);padding-bottom:1px;transition:gap .2s;
+}
+.message-body .cta-link:hover{gap:.7rem}
+
+/* illustration pane */
+.msg-visual{
+  position:relative;border-radius:16px;overflow:hidden;
+  background:linear-gradient(135deg,var(--navy2) 0%,#1e3a6e 100%);
+  aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 24px 60px rgba(26,42,74,.2);
+}
+/* floating dots decoration */
+.msg-visual::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);
+  background-size:28px 28px;
+}
+.msg-visual-svg{position:relative;z-index:1;width:78%;height:auto}
+
+/* ━━━━━━━━━━━━━━━━━━ VALUES */
+.values-section{background:var(--bg)}
+.values-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:3rem;
+}
+.value-card{
+  background:var(--white);border:1px solid var(--border);border-radius:12px;
+  padding:2.2rem 1.8rem;
+  transition:box-shadow .25s,transform .25s,border-color .25s;
+  position:relative;overflow:hidden;
+}
+.value-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--blue),var(--blue-lt));
+  transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease);
+}
+.value-card:hover{box-shadow:0 8px 32px rgba(26,42,74,.1);transform:translateY(-4px);border-color:rgba(37,99,168,.2)}
+.value-card:hover::before{transform:scaleX(1)}
+.v-num{font-size:.65rem;font-weight:700;letter-spacing:.3em;color:rgba(37,99,168,.4);margin-bottom:1rem}
+.v-icon{
+  width:48px;height:48px;border-radius:10px;
+  background:var(--blue-pale);
+  display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem;
+}
+.v-icon svg{width:24px;height:24px;stroke:var(--blue);fill:none;stroke-width:2;stroke-linecap:round}
+.v-title{font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:.6rem;line-height:1.4}
+.v-body{font-size:.82rem;color:var(--gray);line-height:1.95}
+
+/* ━━━━━━━━━━━━━━━━━━ NUMBERS — IMPACT SECTION */
+.numbers-section{
+  background:var(--navy2);
+  position:relative;overflow:hidden;
+  padding:clamp(5rem,9vw,8rem) var(--side);
+}
+.numbers-section::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:64px 64px;
+}
+.numbers-section .s-label{color:rgba(255,255,255,.4)}
+.numbers-section .s-label::before{background:rgba(255,255,255,.3)}
+.numbers-section .s-title{color:#fff}
+.numbers-section .s-title-en{color:rgba(255,255,255,.25)}
+
+.numbers-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:rgba(255,255,255,.08);
+  border-radius:12px;overflow:hidden;margin-top:3rem;
+}
+.num-cell{
+  background:rgba(255,255,255,.04);
+  padding:3rem 2rem;text-align:center;
+  transition:background .25s;position:relative;
+}
+.num-cell:hover{background:rgba(255,255,255,.08)}
+.num-cell::after{
+  content:'';position:absolute;bottom:0;left:10%;right:10%;
+  height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);
+}
+.num-val{
+  font-size:clamp(2.5rem,5vw,4rem);font-weight:900;
+  color:#fff;line-height:1;margin-bottom:.6rem;letter-spacing:-.02em;
+}
+.num-unit{font-size:.5em;font-weight:400;color:rgba(255,255,255,.55);vertical-align:baseline}
+.num-label{font-size:.8rem;color:rgba(255,255,255,.45);line-height:1.7}
+.num-note{font-size:.65rem;color:rgba(255,255,255,.22);margin-top:.4rem}
+/* counter animation */
+.num-val[data-count]{display:block}
+
+/* bar graph inside numbers */
+.num-bar{
+  margin-top:1rem;height:4px;border-radius:100px;
+  background:rgba(255,255,255,.08);overflow:hidden;
+}
+.num-bar-fill{
+  height:100%;border-radius:100px;
+  background:linear-gradient(90deg,var(--blue),#60a5fa);
+  width:0;transition:width 1.2s var(--ease);
+}
+
+/* ━━━━━━━━━━━━━━━━━━ POSITIONS */
+.jobs-section{background:var(--white)}
+
+.jobs-header{
+  display:grid;grid-template-columns:1fr auto;align-items:end;gap:2rem;margin-bottom:2.5rem;
+}
+.jobs-lead{font-size:.9rem;color:var(--gray);line-height:1.9;max-width:500px}
+
+.jobs-list{border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.job-item{
+  display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem;
+  padding:1.8rem 2rem;border-bottom:1px solid var(--border);
+  background:var(--white);transition:background .2s,padding-left .2s;
+  text-decoration:none;color:inherit;cursor:pointer;
+}
+.job-item:last-child{border-bottom:none}
+.job-item:hover{background:var(--bg);padding-left:2.4rem}
+.job-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.5rem}
+.job-tag{
+  font-size:.65rem;font-weight:500;letter-spacing:.06em;
+  padding:.2rem .65rem;border-radius:3px;border:1px solid var(--border);color:var(--gray-lt);
+}
+.job-tag.new{border-color:var(--blue);color:var(--blue);background:var(--blue-pale)}
+.job-tag.full{border-color:#16a34a;color:#16a34a;background:#f0fdf4}
+.job-tag.part{border-color:#ea580c;color:#ea580c;background:#fff7ed}
+.job-title{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:.25rem}
+.job-meta{font-size:.78rem;color:var(--gray-lt)}
+.job-arrow{color:var(--blue);font-size:1.4rem;transition:transform .2s}
+.job-item:hover .job-arrow{transform:translateX(4px)}
+
+/* ━━━━━━━━━━━━━━━━━━ ENVIRONMENT */
+.env-section{background:var(--bg)}
+.env-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;margin-top:3rem}
+.env-card{
+  background:var(--white);border:1px solid var(--border);border-radius:12px;
+  padding:1.8rem 2rem;display:flex;gap:1.2rem;align-items:flex-start;
+  transition:box-shadow .25s,transform .2s;
+}
+.env-card:hover{box-shadow:0 6px 24px rgba(26,42,74,.08);transform:translateY(-2px)}
+.env-icon{
+  width:44px;height:44px;border-radius:10px;background:var(--blue-pale);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.env-icon svg{width:22px;height:22px;stroke:var(--blue);fill:none;stroke-width:2;stroke-linecap:round}
+.env-title{font-size:.92rem;font-weight:700;color:var(--navy);margin-bottom:.35rem}
+.env-body{font-size:.82rem;color:var(--gray);line-height:1.9}
+
+/* ━━━━━━━━━━━━━━━━━━ INFOGRAPHIC — CULTURE */
+.culture-section{background:var(--navy2);padding:clamp(5rem,9vw,8rem) var(--side);position:relative;overflow:hidden}
+.culture-section::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:36px 36px;
+}
+.culture-section .s-label{color:rgba(255,255,255,.4)}
+.culture-section .s-label::before{background:rgba(255,255,255,.3)}
+.culture-section .s-title{color:#fff}
+.culture-section .s-title-en{color:rgba(255,255,255,.25)}
+
+.culture-infographic{
+  margin-top:4rem;position:relative;z-index:1;
+  display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;
+}
+
+/* big culture card — spans 2 rows */
+.culture-card{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;padding:2.2rem;transition:background .3s,border-color .3s;
+}
+.culture-card:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.18)}
+.culture-card.wide{grid-column:1/-1}
+
+.cc-label{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.6rem}
+.cc-title{font-size:1.15rem;font-weight:700;color:#fff;margin-bottom:.8rem;line-height:1.4}
+.cc-body{font-size:.83rem;color:rgba(255,255,255,.55);line-height:1.9}
+
+/* wide card layout */
+.cc-wide-inner{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center}
+.cc-wide-svg{opacity:.85}
+
+/* ━━━━━━━━━━━━━━━━━━ PROCESS */
+.process-section{background:var(--white)}
+.process-timeline{
+  margin-top:3.5rem;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;position:relative;
+}
+/* connecting track */
+.process-timeline::before{
+  content:'';position:absolute;
+  top:30px;left:calc(12.5% + 16px);right:calc(12.5% + 16px);
+  height:2px;
+  background:linear-gradient(90deg,var(--blue) 0%,rgba(37,99,168,.2) 100%);
+  z-index:0;
+}
+
+.proc-step{position:relative;z-index:1;text-align:center;padding:0 1rem}
+.proc-dot{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--blue);border:3px solid var(--white);
+  box-shadow:0 0 0 2px var(--blue);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1.4rem;font-size:.75rem;font-weight:700;color:#fff;
+}
+.proc-step:nth-child(1) .proc-dot{background:var(--navy)}
+.proc-step:nth-child(2) .proc-dot{background:#1d5fa8}
+.proc-step:nth-child(3) .proc-dot{background:var(--blue)}
+.proc-step:nth-child(4) .proc-dot{background:#2563a8;box-shadow:0 0 0 2px var(--blue),0 0 0 6px rgba(37,99,168,.15)}
+
+.proc-title{font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:.4rem;line-height:1.3}
+.proc-body{font-size:.76rem;color:var(--gray);line-height:1.85}
+.proc-badge{
+  display:inline-block;margin-top:.6rem;font-size:.65rem;
+  color:var(--blue);border:1px solid var(--blue);border-radius:3px;
+  padding:.15rem .5rem;background:var(--blue-pale);
+}
+
+/* ━━━━━━━━━━━━━━━━━━ VOICES */
+.voices-section{background:var(--bg)}
+.voices-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:3rem}
+.voice-card{
+  background:var(--white);border:1px solid var(--border);border-radius:12px;
+  padding:2rem;transition:box-shadow .25s,transform .2s;
+}
+.voice-card:hover{box-shadow:0 8px 28px rgba(26,42,74,.1);transform:translateY(-3px)}
+.v-quote-mark{
+  font-size:3rem;line-height:.8;font-family:Georgia,serif;
+  color:var(--blue);opacity:.2;margin-bottom:.6rem;
+}
+.v-text{font-size:.85rem;line-height:2;color:var(--gray-dk);margin-bottom:1.5rem}
+.v-rule{width:20px;height:2px;background:var(--blue);opacity:.3;margin-bottom:1.2rem}
+.v-person{display:flex;align-items:center;gap:.8rem}
+.v-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--navy),var(--blue));
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;color:#fff;font-weight:700;flex-shrink:0;
+}
+.v-name{font-size:.85rem;font-weight:700;color:var(--navy)}
+.v-role{font-size:.72rem;color:var(--gray-lt);margin-top:.1rem}
+
+/* ━━━━━━━━━━━━━━━━━━ CTA */
+.cta-section{
+  background:linear-gradient(135deg,var(--navy2) 0%,#1e3a6e 100%);
+  padding:clamp(5rem,10vw,8rem) var(--side);
+  text-align:center;position:relative;overflow:hidden;
+}
+.cta-section::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:32px 32px;
+}
+.cta-inner{max-width:640px;margin:0 auto;position:relative;z-index:1}
+.cta-label{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:1rem}
+.cta-title{font-size:clamp(1.6rem,4vw,2.8rem);font-weight:900;color:#fff;letter-spacing:-.02em;line-height:1.2;margin-bottom:1.2rem}
+.cta-title em{
+  font-style:normal;
+  background:linear-gradient(135deg,#60a5fa,#93c5fd);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.cta-body{font-size:.9rem;color:rgba(255,255,255,.55);line-height:2;margin-bottom:2.5rem}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+
+/* ━━━━━━━━━━━━━━━━━━ FOOTER */
+.site-footer{background:var(--navy);padding:3rem var(--side) 2rem}
+.footer-top{
+  max-width:var(--max);margin:0 auto;
+  display:grid;grid-template-columns:220px 1fr 1fr;gap:3rem;
+  padding-bottom:2.5rem;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:2rem;
+}
+.f-logo{font-size:.9rem;font-weight:700;color:#fff;letter-spacing:.06em;margin-bottom:.6rem}
+.f-tagline{font-size:.75rem;color:rgba(255,255,255,.35);line-height:1.7}
+.f-col-title{font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.9rem}
+.f-links{display:flex;flex-direction:column;gap:.5rem}
+.f-links a{font-size:.8rem;color:rgba(255,255,255,.5);transition:color .2s}
+.f-links a:hover{color:#fff}
+.footer-bottom{
+  max-width:var(--max);margin:0 auto;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+}
+.f-copy{font-size:.7rem;color:rgba(255,255,255,.25)}
+.f-legal{display:flex;gap:1.5rem}
+.f-legal a{font-size:.7rem;color:rgba(255,255,255,.3)}
+.f-legal a:hover{color:rgba(255,255,255,.6)}
+
+/* ━━━━━━━━━━━━━━━━━━ SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .75s var(--ease),transform .75s var(--ease)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal-l{opacity:0;transform:translateX(-20px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal-l.in{opacity:1;transform:translateX(0)}
+.reveal-r{opacity:0;transform:translateX(20px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal-r.in{opacity:1;transform:translateX(0)}
+
+/* stagger */
+.stagger>*:nth-child(1){transition-delay:.05s}
+.stagger>*:nth-child(2){transition-delay:.12s}
+.stagger>*:nth-child(3){transition-delay:.19s}
+.stagger>*:nth-child(4){transition-delay:.26s}
+.stagger>*:nth-child(5){transition-delay:.33s}
+.stagger>*:nth-child(6){transition-delay:.40s}
+
+/* ━━━━━━━━━━━━━━━━━━ KEYFRAMES */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes barFill{from{width:0}}
+@keyframes scrollPulse{0%,100%{opacity:.3;transform:scaleY(.8)}50%{opacity:.7;transform:scaleY(1.1)}}
+
+/* ━━━━━━━━━━━━━━━━━━ RESPONSIVE */
+@media(max-width:960px){
+  .global-nav{display:none}.hamburger{display:flex}
+  .hero-cards{display:none}
+  .hero-h1{font-size:clamp(2.4rem,7vw,3.6rem)}
+  .message-layout{grid-template-columns:1fr;gap:2.5rem}
+  .values-grid{grid-template-columns:1fr 1fr}
+  .numbers-grid{grid-template-columns:1fr 1fr}
+  .culture-infographic{grid-template-columns:1fr}
+  .cc-wide-inner{grid-template-columns:1fr}
+  .process-timeline{grid-template-columns:1fr 1fr;gap:2rem}
+  .process-timeline::before{display:none}
+  .voices-grid{grid-template-columns:1fr 1fr}
+  .footer-top{grid-template-columns:1fr}
+  .env-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .values-grid{grid-template-columns:1fr}
+  .numbers-grid{grid-template-columns:1fr 1fr}
+  .process-timeline{grid-template-columns:1fr}
+  .voices-grid{grid-template-columns:1fr}
+  .jobs-header{grid-template-columns:1fr}
+  .cta-btns{flex-direction:column;align-items:center}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════ HEADER -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="https://pay-tech.co.jp/" class="logo-wrap">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h11v2H4zm0 5h8v2H4z"/></svg>
+      </div>
+      Payment Technology
+    </a>
+    <nav class="global-nav">
+      <a href="https://pay-tech.co.jp/company/">会社情報</a>
+      <a href="https://pay-tech.co.jp/company/mission/">ミッション</a>
+      <a href="https://pay-tech.co.jp/anyjob/">エニジョブ</a>
+      <a href="https://pay-tech.co.jp/news/">お知らせ</a>
+      <a href="#" class="active">採用情報</a>
+      <a href="https://pay-tech.co.jp/contact/" class="nav-cta">お問い合わせ</a>
+    </nav>
+    <button class="hamburger" id="ham"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="https://pay-tech.co.jp/company/">会社情報</a>
+    <a href="https://pay-tech.co.jp/company/mission/">ミッション</a>
+    <a href="https://pay-tech.co.jp/anyjob/">エニジョブ</a>
+    <a href="https://pay-tech.co.jp/news/">お知らせ</a>
+    <a href="#">採用情報</a>
+    <a href="https://pay-tech.co.jp/contact/">お問い合わせ</a>
+  </nav>
+</header>
+
+<!-- ══════════════════════════════════ HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+
+  <!-- floating UI mockup cards -->
+  <div class="hero-cards">
+    <!-- card 1: KPI -->
+    <div class="hcard">
+      <div class="hcard-label">採用コスト削減率</div>
+      <div class="hcard-content">
+        <div class="hcard-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        </div>
+        <div>
+          <div class="hcard-val">30<span style="font-size:.55em;color:rgba(255,255,255,.6)">%</span></div>
+          <div class="hcard-sub">前年比 採用費削減</div>
+        </div>
+      </div>
+      <div class="hcard-bar"><div class="hcard-bar-fill" style="--w:70%"></div></div>
+    </div>
+    <!-- card 2: team -->
+    <div class="hcard">
+      <div class="hcard-label">現在の募集ポジション</div>
+      <div class="hcard-tags">
+        <span class="hcard-tag">Sales</span>
+        <span class="hcard-tag">PM</span>
+        <span class="hcard-tag">Engineer</span>
+        <span class="hcard-tag">CS</span>
+        <span class="hcard-tag">Marketing</span>
+      </div>
+      <div class="avatar-row" style="margin-top:.8rem">
+        <div class="avatar">T</div>
+        <div class="avatar">K</div>
+        <div class="avatar">A</div>
+        <div class="avatar">M</div>
+        <div class="avatar" style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.6);font-size:.6rem">+2</div>
+      </div>
+    </div>
+    <!-- card 3: mission -->
+    <div class="hcard">
+      <div class="hcard-label">Our Mission</div>
+      <div style="font-size:.85rem;color:#fff;font-weight:500;line-height:1.6;margin-top:.3rem">
+        世界の企業と人に<br>イノベーションを
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-tag">Careers 2025</div>
+    <h1 class="hero-h1">
+      日本の採用を、<br>
+      <em>アップデートする。</em>
+    </h1>
+    <p class="hero-sub">
+      Payment Technologyは、HR事業・給与事業を通じて<br>
+      働くことの価値を根本から変えていくスタートアップです。<br>
+      ミッションに共鳴する仲間を探しています。
+    </p>
+    <div class="hero-actions">
+      <a href="#positions" class="btn btn-primary">募集職種を見る →</a>
+      <a href="#message" class="btn btn-outline-white">会社のことを知る</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- mission band -->
+<div class="mission-band">
+  <p>Our Mission</p>
+  <h2>世界の企業と人にイノベーションを</h2>
+</div>
+
+<!-- subnav -->
+<div class="page-subnav">
+  <div class="subnav-inner">
+    <a href="#message" class="active">メッセージ</a>
+    <a href="#values">バリュー</a>
+    <a href="#numbers">実績・数字</a>
+    <a href="#positions">募集職種</a>
+    <a href="#environment">働く環境</a>
+    <a href="#culture">カルチャー</a>
+    <a href="#process">選考フロー</a>
+    <a href="#voices">社員の声</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ MESSAGE -->
+<section class="section message-section" id="message">
+  <div class="s-inner">
+    <div class="s-label reveal">Message</div>
+    <h2 class="s-title reveal">採用担当からの<br>メッセージ</h2>
+    <p class="s-title-en reveal">From Our Team</p>
+
+    <div class="message-layout">
+      <div class="message-body reveal-l">
+        <p>Payment Technologyは「世界の企業と人にイノベーションを」をミッションに掲げ、HR事業（エニジョブ）と給与事業を通じて、日本の労働市場が抱える構造的な課題に挑んでいます。</p>
+        <p>私たちが向き合っているのは、人口減少・スキマバイトの台頭・採用コストの高騰という、あらゆる企業が直面する切実な課題です。エニジョブは採用を「消費」から<strong>「資産の蓄積」へ</strong>と変えるプラットフォームとして、すでに25社以上に導入されています。</p>
+        <p>事業フェーズとしては、今が最も重要で、最も面白い時期です。少数精鋭のチームで大きな課題に向き合い、自分の仕事が事業に直接インパクトを与える環境があります。<strong>「ここで働くことが自分のキャリアにとって誇りになる」</strong>——そう感じられる人と一緒に働きたいと思っています。</p>
+        <a href="#positions" class="cta-link">募集職種を見る →</a>
+      </div>
+
+      <div class="msg-visual reveal-r">
+        <!-- ── Recruitment illustration SVG ── -->
+        <svg class="msg-visual-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#2563a8" stop-opacity=".4"/>
+              <stop offset="100%" stop-color="#2563a8" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <!-- background glow -->
+          <circle cx="200" cy="200" r="160" fill="url(#glow1)"/>
+
+          <!-- orbit rings -->
+          <circle cx="200" cy="200" r="130" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+          <circle cx="200" cy="200" r="90"  fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+          <circle cx="200" cy="200" r="50"  fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
+
+          <!-- center — company -->
+          <circle cx="200" cy="200" r="32" fill="#2563a8" opacity=".9"/>
+          <text x="200" y="196" text-anchor="middle" fill="#fff" font-size="9" font-family="sans-serif" font-weight="700" letter-spacing="1">PT</text>
+          <text x="200" y="208" text-anchor="middle" fill="rgba(255,255,255,.6)" font-size="6.5" font-family="sans-serif">Company</text>
+
+          <!-- inner orbit: talent nodes -->
+          <g>
+            <circle cx="200" cy="110" r="18" fill="#1e3a6e" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+            <text x="200" y="107" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="7" font-family="sans-serif">Sales</text>
+            <text x="200" y="116" text-anchor="middle" fill="rgba(255,255,255,.4)" font-size="5.5" font-family="sans-serif">Engineer</text>
+
+            <circle cx="290" cy="200" r="18" fill="#1e3a6e" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+            <text x="290" y="197" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="7" font-family="sans-serif">PM</text>
+            <text x="290" y="207" text-anchor="middle" fill="rgba(255,255,255,.4)" font-size="5.5" font-family="sans-serif">Design</text>
+
+            <circle cx="200" cy="290" r="18" fill="#1e3a6e" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+            <text x="200" y="287" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="7" font-family="sans-serif">CS</text>
+            <text x="200" y="297" text-anchor="middle" fill="rgba(255,255,255,.4)" font-size="5.5" font-family="sans-serif">Support</text>
+
+            <circle cx="110" cy="200" r="18" fill="#1e3a6e" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+            <text x="110" y="197" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="7" font-family="sans-serif">Mktg</text>
+            <text x="110" y="207" text-anchor="middle" fill="rgba(255,255,255,.4)" font-size="5.5" font-family="sans-serif">Growth</text>
+          </g>
+
+          <!-- connecting lines inner -->
+          <line x1="200" y1="168" x2="200" y2="128" stroke="rgba(37,99,168,.5)" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="232" y1="200" x2="272" y2="200" stroke="rgba(37,99,168,.5)" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="200" y1="232" x2="200" y2="272" stroke="rgba(37,99,168,.5)" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="168" y1="200" x2="128" y2="200" stroke="rgba(37,99,168,.5)" stroke-width="1" stroke-dasharray="3 3"/>
+
+          <!-- outer orbit: people dots -->
+          <circle cx="200" cy="70"  r="10" fill="#2563a8" opacity=".6"/>
+          <circle cx="320" cy="130" r="8"  fill="#2563a8" opacity=".4"/>
+          <circle cx="340" cy="260" r="9"  fill="#2563a8" opacity=".5"/>
+          <circle cx="230" cy="355" r="7"  fill="#2563a8" opacity=".35"/>
+          <circle cx="100" cy="330" r="9"  fill="#2563a8" opacity=".45"/>
+          <circle cx="65"  cy="170" r="8"  fill="#2563a8" opacity=".4"/>
+          <circle cx="130" cy="55"  r="7"  fill="#2563a8" opacity=".35"/>
+
+          <!-- connecting arcs (outer) -->
+          <path d="M200,70 Q260,90 290,200" fill="none" stroke="rgba(37,99,168,.2)" stroke-width=".8"/>
+          <path d="M65,170 Q70,260 200,290"  fill="none" stroke="rgba(37,99,168,.2)" stroke-width=".8"/>
+          <path d="M200,355 Q130,330 110,200" fill="none" stroke="rgba(37,99,168,.2)" stroke-width=".8"/>
+
+          <!-- label -->
+          <text x="200" y="390" text-anchor="middle" fill="rgba(255,255,255,.2)" font-size="8" font-family="sans-serif" letter-spacing="2">TALENT ECOSYSTEM</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ VALUES -->
+<section class="section values-section" id="values">
+  <div class="s-inner">
+    <div class="s-label reveal">Values</div>
+    <h2 class="s-title reveal">私たちが大切にしていること</h2>
+    <p class="s-title-en reveal">Core Values</p>
+
+    <div class="values-grid stagger">
+
+      <div class="value-card reveal">
+        <div class="v-num">VALUE 01</div>
+        <div class="v-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <div class="v-title">スピードと実行力</div>
+        <p class="v-body">考えることと動くことを同時にやる。不確実な状況でも仮説を立て、検証し、改善し続ける。一人ひとりの行動が事業を直接動かします。</p>
+      </div>
+
+      <div class="value-card reveal">
+        <div class="v-num">VALUE 02</div>
+        <div class="v-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="v-title">社会課題への真摯な向き合い</div>
+        <p class="v-body">日本の人材不足・採用コスト問題という構造課題に向き合う。事業の成功が社会課題の解決に直結する、このミッションに本気で共鳴できる人と働きたい。</p>
+      </div>
+
+      <div class="value-card reveal">
+        <div class="v-num">VALUE 03</div>
+        <div class="v-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="v-title">データと論理で語る</div>
+        <p class="v-body">「なんとなく」ではなく数字と根拠で意思決定する。感情論ではなく、ロジックと事実で議論できる文化を大切にしています。</p>
+      </div>
+
+      <div class="value-card reveal">
+        <div class="v-num">VALUE 04</div>
+        <div class="v-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="v-title">オーナーシップ</div>
+        <p class="v-body">担当領域を自分ごととして責任を持つ。指示を待つのではなく、自ら課題を見つけて提案する。スタートアップだからこそ、裁量を持って仕事ができます。</p>
+      </div>
+
+      <div class="value-card reveal">
+        <div class="v-num">VALUE 05</div>
+        <div class="v-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div class="v-title">グローバルな視野</div>
+        <p class="v-body">ミッションは日本に留まりません。国内で実証したモデルを世界の労働市場にも展開することを見据え、事業を設計しています。</p>
+      </div>
+
+      <div class="value-card reveal">
+        <div class="v-num">VALUE 06</div>
+        <div class="v-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+        </div>
+        <div class="v-title">相互リスペクト</div>
+        <p class="v-body">役職・年次を問わず意見を尊重し、建設的に議論できる組織文化。誰でも正直に意見を言える心理的安全性を大切にしています。</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ NUMBERS -->
+<section class="numbers-section" id="numbers">
+  <div class="s-inner">
+    <div class="s-label reveal">Numbers</div>
+    <h2 class="s-title reveal">数字で見る<br>Payment Technology</h2>
+    <p class="s-title-en reveal">Company at a Glance</p>
+
+    <div class="numbers-grid stagger reveal">
+      <div class="num-cell">
+        <div class="num-val" data-count="25">0<span class="num-unit">社+</span></div>
+        <div class="num-label">エニジョブ<br>導入企業数</div>
+        <div class="num-bar"><div class="num-bar-fill" style="--w:62%"></div></div>
+      </div>
+      <div class="num-cell">
+        <div class="num-val" data-count="30">0<span class="num-unit">%</span></div>
+        <div class="num-label">平均採用コスト<br>削減率</div>
+        <div class="num-note">※2025年当社実績</div>
+        <div class="num-bar"><div class="num-bar-fill" style="--w:30%"></div></div>
+      </div>
+      <div class="num-cell">
+        <div class="num-val" data-count="50">0<span class="num-unit">%</span></div>
+        <div class="num-label">シフト管理<br>工数削減</div>
+        <div class="num-note">※2025年当社実績</div>
+        <div class="num-bar"><div class="num-bar-fill" style="--w:50%"></div></div>
+      </div>
+      <div class="num-cell">
+        <div class="num-val">2017<span class="num-unit">年</span></div>
+        <div class="num-label">設立年<br>東京・文京区</div>
+        <div class="num-bar"><div class="num-bar-fill" style="--w:85%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ POSITIONS -->
+<section class="section jobs-section" id="positions">
+  <div class="s-inner">
+    <div class="s-label reveal">Open Positions</div>
+    <div class="jobs-header reveal">
+      <div>
+        <h2 class="s-title" style="margin-bottom:.4rem">募集職種</h2>
+        <p class="s-title-en" style="margin-bottom:.8rem">We're Hiring</p>
+        <p class="jobs-lead">現在、以下のポジションで採用中です。カジュアル面談からでも大歓迎。</p>
+      </div>
+      <a href="#contact" class="btn btn-primary" style="align-self:flex-end">エントリーする →</a>
+    </div>
+
+    <div class="jobs-list reveal">
+      <a href="#contact" class="job-item">
+        <div>
+          <div class="job-tags"><span class="job-tag new">急募</span><span class="job-tag full">正社員</span></div>
+          <div class="job-title">エンタープライズセールス（エニジョブ）</div>
+          <div class="job-meta">東京・文京区 ／ 年収 400〜700万円 ／ 大手企業向け法人営業</div>
+        </div>
+        <div class="job-arrow">›</div>
+      </a>
+      <a href="#contact" class="job-item">
+        <div>
+          <div class="job-tags"><span class="job-tag new">急募</span><span class="job-tag full">正社員</span></div>
+          <div class="job-title">プロダクトマネージャー</div>
+          <div class="job-meta">東京・文京区 ／ 年収 500〜800万円 ／ HR SaaS プロダクト開発</div>
+        </div>
+        <div class="job-arrow">›</div>
+      </a>
+      <a href="#contact" class="job-item">
+        <div>
+          <div class="job-tags"><span class="job-tag full">正社員</span></div>
+          <div class="job-title">グロースマーケター</div>
+          <div class="job-meta">東京・文京区（リモート可） ／ 年収 400〜650万円 ／ デジタルマーケティング</div>
+        </div>
+        <div class="job-arrow">›</div>
+      </a>
+      <a href="#contact" class="job-item">
+        <div>
+          <div class="job-tags"><span class="job-tag full">正社員</span></div>
+          <div class="job-title">バックエンドエンジニア</div>
+          <div class="job-meta">フルリモート可 ／ 年収 500〜900万円 ／ Go / AWS</div>
+        </div>
+        <div class="job-arrow">›</div>
+      </a>
+      <a href="#contact" class="job-item">
+        <div>
+          <div class="job-tags"><span class="job-tag full">正社員</span></div>
+          <div class="job-title">カスタマーサクセス</div>
+          <div class="job-meta">東京・文京区 ／ 年収 350〜550万円 ／ 導入企業の活用支援</div>
+        </div>
+        <div class="job-arrow">›</div>
+      </a>
+      <a href="#contact" class="job-item">
+        <div>
+          <div class="job-tags"><span class="job-tag part">インターン</span></div>
+          <div class="job-title">事業開発インターン</div>
+          <div class="job-meta">週3〜可 ／ 時給 1,200〜1,500円 ／ 営業・マーケ・企画</div>
+        </div>
+        <div class="job-arrow">›</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ ENVIRONMENT -->
+<section class="section env-section" id="environment">
+  <div class="s-inner">
+    <div class="s-label reveal">Environment</div>
+    <h2 class="s-title reveal">働く環境・福利厚生</h2>
+    <p class="s-title-en reveal">Work Environment & Benefits</p>
+
+    <div class="env-grid stagger">
+      <div class="env-card reveal">
+        <div class="env-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <div><div class="env-title">フレックスタイム・リモートワーク</div><p class="env-body">コアタイムなしのスーパーフレックス制度。職種によりフルリモート対応可。成果で評価される環境です。</p></div>
+      </div>
+      <div class="env-card reveal">
+        <div class="env-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <div><div class="env-title">給与前払いサービス（自社）</div><p class="env-body">当社提供の給与前払いサービスを社員も利用可能。急な出費にも柔軟に対応できます。</p></div>
+      </div>
+      <div class="env-card reveal">
+        <div class="env-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+        <div><div class="env-title">書籍・学習支援制度</div><p class="env-body">業務関連の書籍・オンライン講座・カンファレンス参加費を会社が負担します。</p></div>
+      </div>
+      <div class="env-card reveal">
+        <div class="env-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div><div class="env-title">フラットな組織文化</div><p class="env-body">役職・年次に関係なくダイレクトに意見を言える文化。代表との距離も近く、意思決定に関われます。</p></div>
+      </div>
+      <div class="env-card reveal">
+        <div class="env-icon"><svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+        <div><div class="env-title">ストックオプション制度</div><p class="env-body">一定条件を満たした社員にはストックオプションを付与。事業の成長を直接享受できます。</p></div>
+      </div>
+      <div class="env-card reveal">
+        <div class="env-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <div><div class="env-title">グローバルキャリアパス</div><p class="env-body">海外展開も視野に入れており、グローバルな事業開発に携われる可能性があります。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ CULTURE INFOGRAPHIC -->
+<section class="culture-section" id="culture">
+  <div class="s-inner">
+    <div class="s-label reveal">Culture</div>
+    <h2 class="s-title reveal">チームのカルチャー</h2>
+    <p class="s-title-en reveal">How We Work</p>
+
+    <div class="culture-infographic stagger">
+
+      <!-- wide top card -->
+      <div class="culture-card wide reveal">
+        <div class="cc-wide-inner">
+          <div>
+            <div class="cc-label">Core Belief</div>
+            <div class="cc-title" style="font-size:1.5rem">採用を「消費」から<br>「資産の蓄積」へ</div>
+            <p class="cc-body" style="margin-top:.8rem">エニジョブが解決しようとしているのは、採用の構造そのものです。私たちはこのミッションを、プロダクト・セールス・マーケティングのあらゆる角度から推進しています。毎日の仕事が、直接このビジョンの実現につながっています。</p>
+          </div>
+          <!-- mini chart SVG -->
+          <svg class="cc-wide-svg" viewBox="0 0 280 180" xmlns="http://www.w3.org/2000/svg">
+            <!-- axes -->
+            <line x1="40" y1="20" x2="40" y2="150" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+            <line x1="40" y1="150" x2="260" y2="150" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+            <!-- old line (catabolic) -->
+            <polyline points="40,140 80,138 120,136 160,138 200,135 240,137" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <!-- new line (anabolic) -->
+            <polyline points="40,140 80,125 120,105 160,82 200,56 240,30" fill="none" stroke="#60a5fa" stroke-width="2"/>
+            <circle cx="240" cy="30" r="4" fill="#60a5fa"/>
+            <!-- labels -->
+            <text x="250" y="27" fill="#60a5fa" font-size="8" font-family="sans-serif">積立型</text>
+            <text x="244" y="143" fill="rgba(255,255,255,.3)" font-size="8" font-family="sans-serif">従来型</text>
+            <!-- y axis labels -->
+            <text x="10" y="153" fill="rgba(255,255,255,.25)" font-size="7" font-family="sans-serif">導入</text>
+            <text x="10" y="25"  fill="rgba(255,255,255,.25)" font-size="7" font-family="sans-serif">高</text>
+            <text x="30" y="165" fill="rgba(255,255,255,.2)"  font-size="7" font-family="sans-serif">採用資産価値</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="culture-card reveal">
+        <div class="cc-label">Speed</div>
+        <div class="cc-title">意思決定が速い</div>
+        <p class="cc-body">少人数チームだからこそ、ミーティングで合意してその日のうちに実行できる。提案から実装まで、大企業では考えられないスピードで動きます。</p>
+      </div>
+
+      <div class="culture-card reveal">
+        <div class="cc-label">Ownership</div>
+        <div class="cc-title">担当領域は自分の事業</div>
+        <p class="cc-body">「あの機能を作ったのは自分」「あのクライアントを口説いたのは自分」——自分の仕事がプロダクト・数字に直接残る環境があります。</p>
+      </div>
+
+      <div class="culture-card reveal">
+        <div class="cc-label">Growth</div>
+        <div class="cc-title">急速に学べる環境</div>
+        <p class="cc-body">成長フェーズのスタートアップは、経験が圧縮されます。1年で大企業の3〜5年分の意思決定経験を積めると多くのメンバーが話しています。</p>
+      </div>
+
+      <div class="culture-card reveal">
+        <div class="cc-label">Mission</div>
+        <div class="cc-title">仕事が社会課題と直結</div>
+        <p class="cc-body">人材不足に悩む企業が採用コストを削減できた。そのインパクトを数字で見ながら働けることが、チームの最大のモチベーションになっています。</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ PROCESS -->
+<section class="section process-section" id="process">
+  <div class="s-inner">
+    <div class="s-label reveal">Selection Process</div>
+    <h2 class="s-title reveal">選考フロー</h2>
+    <p class="s-title-en reveal">How to Apply</p>
+    <p class="s-lead reveal" style="margin-bottom:0">カジュアル面談からでも大歓迎です。まずはお気軽にご連絡ください。</p>
+
+    <div class="process-timeline reveal stagger" style="margin-top:3.5rem">
+      <div class="proc-step">
+        <div class="proc-dot">01</div>
+        <div class="proc-title">書類選考</div>
+        <p class="proc-body">履歴書・職務経歴書をご提出ください。選考結果は3営業日以内にご連絡します。</p>
+        <span class="proc-badge">3営業日以内</span>
+      </div>
+      <div class="proc-step">
+        <div class="proc-dot">02</div>
+        <div class="proc-title">カジュアル面談</div>
+        <p class="proc-body">会社・事業・チームのことをざっくばらんにお話しします。オンライン対応可。</p>
+        <span class="proc-badge">30〜45分</span>
+      </div>
+      <div class="proc-step">
+        <div class="proc-dot">03</div>
+        <div class="proc-title">面接（1〜2回）</div>
+        <p class="proc-body">担当者・マネージャーとの面接。実務課題をお願いする場合があります。</p>
+        <span class="proc-badge">各45〜60分</span>
+      </div>
+      <div class="proc-step">
+        <div class="proc-dot">04</div>
+        <div class="proc-title">最終面接・内定</div>
+        <p class="proc-body">代表との最終面接後、条件確認のうえ内定通知をお送りします。</p>
+        <span class="proc-badge">1週間以内</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ VOICES -->
+<section class="section voices-section" id="voices">
+  <div class="s-inner">
+    <div class="s-label reveal">Member Voices</div>
+    <h2 class="s-title reveal">社員の声</h2>
+    <p class="s-title-en reveal">What Our Team Says</p>
+
+    <div class="voices-grid stagger">
+      <div class="voice-card reveal">
+        <div class="v-quote-mark">"</div>
+        <p class="v-text">導入企業が採用コストを30%削減できたと報告を受けたとき、自分の仕事が現場に直接インパクトを与えていると実感しました。数字で語れる営業ができる環境が好きです。</p>
+        <div class="v-rule"></div>
+        <div class="v-person">
+          <div class="v-avatar">TY</div>
+          <div><div class="v-name">T.Y</div><div class="v-role">エンタープライズセールス ／ 入社1年</div></div>
+        </div>
+      </div>
+      <div class="voice-card reveal">
+        <div class="v-quote-mark">"</div>
+        <p class="v-text">プロダクトの方向性を自分が提案して実際に実装されるサイクルが速い。大手では経験できない「自分で決める」感覚が、ここでは毎日あります。</p>
+        <div class="v-rule"></div>
+        <div class="v-person">
+          <div class="v-avatar">KN</div>
+          <div><div class="v-name">K.N</div><div class="v-role">プロダクトマネージャー ／ 入社8ヶ月</div></div>
+        </div>
+      </div>
+      <div class="voice-card reveal">
+        <div class="v-quote-mark">"</div>
+        <p class="v-text">「人材不足」という社会課題をテクノロジーで解決する事業に携われていることが一番のモチベーション。会社の規模は小さくても、課題の大きさは本物だと感じています。</p>
+        <div class="v-rule"></div>
+        <div class="v-person">
+          <div class="v-avatar">AS</div>
+          <div><div class="v-name">A.S</div><div class="v-role">カスタマーサクセス ／ 入社6ヶ月</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-inner reveal">
+    <div class="cta-label">Entry</div>
+    <h2 class="cta-title">Payment Technologyで<br><em>一緒に働きませんか</em></h2>
+    <p class="cta-body">カジュアル面談からでも歓迎しています。<br>採用担当より3営業日以内にご連絡いたします。</p>
+    <div class="cta-btns">
+      <a href="https://pay-tech.co.jp/contact/" class="btn btn-primary">エントリーする →</a>
+      <a href="#positions" class="btn btn-outline-white">募集職種を見る</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════ FOOTER -->
+<footer class="site-footer">
+  <div class="footer-top">
+    <div>
+      <div class="f-logo">Payment Technology</div>
+      <p class="f-tagline">世界の企業と人に<br>イノベーションを</p>
+    </div>
+    <div>
+      <div class="f-col-title">Company</div>
+      <div class="f-links">
+        <a href="https://pay-tech.co.jp/company/">会社情報</a>
+        <a href="https://pay-tech.co.jp/company/mission/">ミッション</a>
+        <a href="https://pay-tech.co.jp/company/ceo-message/">代表挨拶</a>
+        <a href="https://pay-tech.co.jp/company/outline/">会社概要・沿革</a>
+        <a href="#">採用情報</a>
+      </div>
+    </div>
+    <div>
+      <div class="f-col-title">Service</div>
+      <div class="f-links">
+        <a href="https://pay-tech.co.jp/anyjob/">エニジョブ</a>
+        <a href="https://pay-tech.co.jp/lite/">前払いできるくんLITE</a>
+        <a href="https://pay-tech.co.jp/news/">お知らせ</a>
+        <a href="https://pay-tech.co.jp/contact/">お問い合わせ</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="f-copy">©︎ Payment Technology Co. Ltd.</p>
+    <div class="f-legal">
+      <a href="https://pay-tech.co.jp/commercial-transactions-law/">特定商取引</a>
+      <a href="https://pay-tech.co.jp/privacypolicy/">プライバシーポリシー</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* header scroll shadow */
+const hdr = document.getElementById('siteHeader');
+window.addEventListener('scroll',()=>hdr.classList.toggle('scrolled',window.scrollY>10),{passive:true});
+
+/* hamburger */
+document.getElementById('ham').addEventListener('click',function(){
+  document.getElementById('mobileNav').classList.toggle('open');
+});
+
+/* scroll reveal */
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      /* bar fill */
+      e.target.querySelectorAll('.num-bar-fill,.hcard-bar-fill').forEach(b=>{
+        b.style.width = b.style.getPropertyValue('--w') || '60%';
+      });
+      /* counter */
+      e.target.querySelectorAll('[data-count]').forEach(el=>{
+        const target = +el.dataset.count;
+        const unit = el.querySelector('.num-unit');
+        let start=0,step=target/50;
+        const tick=()=>{
+          start=Math.min(start+step,target);
+          el.childNodes[0].textContent=Math.floor(start);
+          if(start<target) requestAnimationFrame(tick);
+        };
+        setTimeout(tick,200);
+      });
+    }
+  });
+},{threshold:.08});
+document.querySelectorAll('.reveal,.reveal-l,.reveal-r,.num-cell').forEach(el=>io.observe(el));
+
+/* subnav active */
+const sectionEls=[...document.querySelectorAll('section[id],[id]')];
+const navAs=[...document.querySelectorAll('.page-subnav a')];
+window.addEventListener('scroll',()=>{
+  let cur='';
+  sectionEls.forEach(s=>{if(window.scrollY>=s.offsetTop-110)cur=s.id});
+  navAs.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+},{passive:true});
+
+/* smooth scroll */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}
+  });
+});
+</script>
+</body>
+</html>
